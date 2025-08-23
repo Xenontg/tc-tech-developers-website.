@@ -381,11 +381,11 @@
                             children: (0, r.jsxs)("p", {
                                 className: "text-[#F5F5F5]/70",
                                 children: ["Powered by", " ", (0, r.jsx)("a", {
-                                    href: "https://telvix.tech",
+                                    href: "https://tctechdevelopers.com",
                                     target: "_blank",
                                     rel: "noopener noreferrer",
                                     className: "text-[#00FFFF] hover:text-[#00FFFF]/80 transition-colors",
-                                    children: "Nucho/Telvix"
+                                    children: "TC TECH DEVELOPERS"
                                 })]
                             })
                         })]
