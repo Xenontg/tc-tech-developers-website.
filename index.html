@@ -1,0 +1,2526 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <title>TC TECH DEVELOPERS - Premium VPN Solutions</title>
+    <meta name="description" content="Advanced VPN applications including HTTP Custom, HTTP Injector, and Dark Tunnel for secure internet browsing" />
+    <meta name="theme-color" content="#00FFFF" />
+    <meta name="msapplication-TileColor" content="#1A1A1A" />
+    <link rel="icon" href="logo (3).jpg" type="image/jpeg" />
+    <link rel="shortcut icon" href="logo (3).jpg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="logo (3).jpg" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Initialize Supabase client with real credentials
+        const supabaseUrl = 'https://nwvgfheincbqvpubrefg.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53dmdmaGVpbmNicXZwdWJyZWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5NDE0MzksImV4cCI6MjA3MTUxNzQzOX0.DqQqLkjlVSPqon3rggBh1fM2EXDBiw1gLtGvsNViL_w';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+            color: #F5F5F5;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: move-stars 100s linear infinite;
+        }
+        
+        @keyframes move-stars {
+            from { transform: translateX(0); }
+            to { transform: translateX(-200px); }
+        }
+        
+        .rocket {
+            position: absolute;
+            width: 60px;
+            height: 120px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border-radius: 50% 50% 0 0;
+            animation: rocket-float 20s ease-in-out infinite;
+        }
+        
+        .rocket::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #ff6b6b;
+        }
+        
+        .rocket::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            background: linear-gradient(45deg, #ffd93d, #ff6b6b);
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .rocket:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .rocket:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: -10s;
+        }
+        
+        .rocket:nth-child(3) {
+            top: 40%;
+            left: 80%;
+            animation-delay: -5s;
+        }
+        
+        @keyframes rocket-float {
+            0%, 100% { transform: translateY(0px) rotate(5deg); }
+            50% { transform: translateY(-30px) rotate(-5deg); }
+        }
+        
+        .tech-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 30s linear infinite;
+        }
+        
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Diamond Elements */
+        .diamond {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            transform: rotate(45deg);
+            animation: diamond-float 4s ease-in-out infinite;
+            opacity: 0.8;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+        
+        .diamond::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            transform: translate(-50%, -50%) rotate(45deg);
+            border-radius: 2px;
+        }
+        
+        .diamond:nth-child(4) {
+            top: 15%;
+            left: 20%;
+            animation-delay: 0s;
+            animation-duration: 3.5s;
+        }
+        
+        .diamond:nth-child(5) {
+            top: 70%;
+            left: 80%;
+            animation-delay: -1s;
+            animation-duration: 4.2s;
+        }
+        
+        .diamond:nth-child(6) {
+            top: 45%;
+            left: 5%;
+            animation-delay: -2s;
+            animation-duration: 3.8s;
+        }
+        
+        .diamond:nth-child(7) {
+            top: 25%;
+            left: 75%;
+            animation-delay: -1.5s;
+            animation-duration: 4.5s;
+        }
+        
+        .diamond:nth-child(8) {
+            top: 85%;
+            left: 15%;
+            animation-delay: -2.5s;
+            animation-duration: 3.2s;
+        }
+        
+        @keyframes diamond-float {
+            0%, 100% { 
+                transform: rotate(45deg) translate(0, 0) scale(1);
+                opacity: 0.8;
+            }
+            20% { 
+                transform: rotate(45deg) translate(120px, -80px) scale(1.3);
+                opacity: 1;
+            }
+            40% { 
+                transform: rotate(45deg) translate(80px, 120px) scale(0.7);
+                opacity: 0.6;
+            }
+            60% { 
+                transform: rotate(45deg) translate(-100px, -60px) scale(1.2);
+                opacity: 0.9;
+            }
+            80% { 
+                transform: rotate(45deg) translate(-60px, 100px) scale(0.8);
+                opacity: 0.7;
+            }
+        }
+        
+        /* Covalent Bond Lines */
+        .bond-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.6), rgba(255, 0, 255, 0.6));
+            transform-origin: left center;
+            animation: bond-pulse 2s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        .bond-line:nth-child(21) {
+            top: 20%;
+            left: 25%;
+            width: 80px;
+            transform: rotate(45deg);
+            animation-delay: 0s;
+        }
+        
+        .bond-line:nth-child(22) {
+            top: 50%;
+            left: 10%;
+            width: 120px;
+            transform: rotate(-30deg);
+            animation-delay: -0.5s;
+        }
+        
+        .bond-line:nth-child(23) {
+            top: 30%;
+            left: 80%;
+            width: 100px;
+            transform: rotate(60deg);
+            animation-delay: -1s;
+        }
+        
+        .bond-line:nth-child(24) {
+            top: 80%;
+            left: 20%;
+            width: 90px;
+            transform: rotate(-45deg);
+            animation-delay: -1.5s;
+        }
+        
+        .bond-line:nth-child(25) {
+            top: 40%;
+            left: 60%;
+            width: 70px;
+            transform: rotate(15deg);
+            animation-delay: -0.8s;
+        }
+        
+        .bond-line:nth-child(26) {
+            top: 60%;
+            left: 40%;
+            width: 110px;
+            transform: rotate(-75deg);
+            animation-delay: -1.2s;
+        }
+        
+        @keyframes bond-pulse {
+            0%, 100% { 
+                opacity: 0.6;
+                transform: scaleX(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scaleX(1.2);
+            }
+        }
+        
+        /* Dynamic Bond Connections */
+        .dynamic-bond {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.8), transparent);
+            animation: dynamic-bond-flow 3s linear infinite;
+            z-index: -1;
+        }
+        
+        .dynamic-bond:nth-child(27) {
+            top: 25%;
+            left: 30%;
+            width: 60px;
+            transform: rotate(20deg);
+            animation-delay: 0s;
+        }
+        
+        .dynamic-bond:nth-child(28) {
+            top: 55%;
+            left: 70%;
+            width: 80px;
+            transform: rotate(-40deg);
+            animation-delay: -1.5s;
+        }
+        
+        .dynamic-bond:nth-child(29) {
+            top: 75%;
+            left: 50%;
+            width: 50px;
+            transform: rotate(70deg);
+            animation-delay: -2.5s;
+        }
+        
+        @keyframes dynamic-bond-flow {
+            0% { 
+                opacity: 0;
+                transform: scaleX(0) rotate(var(--rotation));
+            }
+            50% { 
+                opacity: 1;
+                transform: scaleX(1) rotate(var(--rotation));
+            }
+            100% { 
+                opacity: 0;
+                transform: scaleX(0) rotate(var(--rotation));
+            }
+        }
+        
+        /* Floating Circles */
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.3), transparent);
+            animation: circle-float 20s ease-in-out infinite;
+        }
+        
+        .floating-circle:nth-child(9) {
+            width: 60px;
+            height: 60px;
+            top: 10%;
+            left: 60%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+        
+        .floating-circle:nth-child(10) {
+            width: 40px;
+            height: 40px;
+            top: 80%;
+            left: 30%;
+            animation-delay: -8s;
+            animation-duration: 22s;
+        }
+        
+        .floating-circle:nth-child(11) {
+            width: 80px;
+            height: 80px;
+            top: 30%;
+            left: 90%;
+            animation-delay: -15s;
+            animation-duration: 28s;
+        }
+        
+        @keyframes circle-float {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            33% { 
+                transform: translate(-80px, -60px) scale(1.3);
+                opacity: 0.6;
+            }
+            66% { 
+                transform: translate(60px, 80px) scale(0.7);
+                opacity: 0.2;
+            }
+        }
+        
+        /* Big TC Impression */
+        .tc-impression {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', monospace;
+            font-size: 15rem;
+            font-weight: 900;
+            color: rgba(0, 255, 255, 0.05);
+            z-index: -2;
+            animation: tc-pulse 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes tc-pulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.05;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.08;
+            }
+        }
+        
+        /* Dispersing Diamonds around TC */
+        .tc-diamond {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.6), rgba(255, 0, 255, 0.6));
+            transform: rotate(45deg);
+            animation: tc-diamond-disperse 10s ease-in-out infinite;
+        }
+        
+        .tc-diamond:nth-child(13) {
+            top: 35%;
+            left: 35%;
+            animation-delay: 0s;
+        }
+        
+        .tc-diamond:nth-child(14) {
+            top: 35%;
+            right: 35%;
+            animation-delay: -2s;
+        }
+        
+        .tc-diamond:nth-child(15) {
+            bottom: 35%;
+            left: 35%;
+            animation-delay: -4s;
+        }
+        
+        .tc-diamond:nth-child(16) {
+            bottom: 35%;
+            right: 35%;
+            animation-delay: -6s;
+        }
+        
+        .tc-diamond:nth-child(17) {
+            top: 50%;
+            left: 25%;
+            animation-delay: -1s;
+        }
+        
+        .tc-diamond:nth-child(18) {
+            top: 50%;
+            right: 25%;
+            animation-delay: -3s;
+        }
+        
+        .tc-diamond:nth-child(19) {
+            top: 25%;
+            left: 50%;
+            animation-delay: -5s;
+        }
+        
+        .tc-diamond:nth-child(20) {
+            bottom: 25%;
+            left: 50%;
+            animation-delay: -7s;
+        }
+        
+        @keyframes tc-diamond-disperse {
+            0%, 100% { 
+                transform: rotate(45deg) translate(0, 0) scale(1);
+                opacity: 0.6;
+            }
+            25% { 
+                transform: rotate(45deg) translate(-40px, -40px) scale(1.5);
+                opacity: 1;
+            }
+            50% { 
+                transform: rotate(45deg) translate(40px, 40px) scale(0.8);
+                opacity: 0.3;
+            }
+            75% { 
+                transform: rotate(45deg) translate(-20px, 20px) scale(1.2);
+                opacity: 0.8;
+            }
+        }
+        
+        /* Container and layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header styles */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #F5F5F5;
+            position: relative;
+        }
+        
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff, #00FFFF);
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo:hover::before {
+            opacity: 1;
+        }
+        
+        .logo img {
+            height: 3rem;
+            width: 3rem;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        }
+        
+        .logo span {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: #F5F5F5;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        nav a:hover::before {
+            width: 100%;
+        }
+        
+        nav a:hover {
+            color: #00FFFF;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .sign-in-btn {
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            border: none;
+            color: #000;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            animation: glass-break 3s ease-in-out infinite;
+        }
+        
+        .logout-btn {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* Mobile responsiveness for auth buttons */
+        @media (max-width: 768px) {
+            .auth-buttons {
+                display: none; /* Hide auth buttons on mobile */
+            }
+            
+            .logout-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                min-width: auto;
+            }
+        }
+        
+        /* Desktop: Hide mobile auth buttons */
+        @media (min-width: 769px) {
+            .mobile-auth-buttons {
+                display: none !important;
+            }
+        }
+        
+        /* Glass Breaking Animation */
+        .sign-in-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            border-radius: 50px;
+            z-index: -1;
+            animation: glass-shards 3s ease-in-out infinite;
+        }
+        
+        .sign-in-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #ff00ff, #00FFFF);
+            border-radius: 50px;
+            z-index: -2;
+            animation: glass-reassemble 3s ease-in-out infinite;
+        }
+        
+        /* Glass Breaking Keyframes */
+        @keyframes glass-break {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                filter: brightness(1) blur(0px);
+            }
+            15% {
+                transform: scale(1.05) rotate(1deg);
+                filter: brightness(1.2) blur(0px);
+            }
+            30% {
+                transform: scale(0.95) rotate(-1deg);
+                filter: brightness(0.8) blur(0.5px);
+            }
+            45% {
+                transform: scale(1.1) rotate(2deg);
+                filter: brightness(1.3) blur(1px);
+            }
+            60% {
+                transform: scale(0.9) rotate(-2deg);
+                filter: brightness(0.7) blur(1.5px);
+            }
+            75% {
+                transform: scale(1.15) rotate(3deg);
+                filter: brightness(1.4) blur(2px);
+            }
+            90% {
+                transform: scale(0.85) rotate(-3deg);
+                filter: brightness(0.6) blur(2.5px);
+            }
+        }
+        
+        @keyframes glass-shards {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(1) rotate(0deg);
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+            20% {
+                opacity: 0.3;
+                transform: scale(1.1) rotate(5deg);
+                clip-path: polygon(10% 0%, 90% 0%, 95% 100%, 5% 100%);
+            }
+            40% {
+                opacity: 0.6;
+                transform: scale(1.2) rotate(10deg);
+                clip-path: polygon(20% 0%, 80% 0%, 90% 100%, 10% 100%);
+            }
+            60% {
+                opacity: 0.8;
+                transform: scale(1.3) rotate(15deg);
+                clip-path: polygon(30% 0%, 70% 0%, 85% 100%, 15% 100%);
+            }
+            80% {
+                opacity: 0.4;
+                transform: scale(1.1) rotate(8deg);
+                clip-path: polygon(15% 0%, 85% 0%, 90% 100%, 10% 100%);
+            }
+        }
+        
+        @keyframes glass-reassemble {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.8) rotate(0deg);
+                clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+            }
+            25% {
+                opacity: 0.2;
+                transform: scale(0.9) rotate(5deg);
+                clip-path: polygon(40% 40%, 60% 40%, 60% 60%, 40% 60%);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1) rotate(0deg);
+                clip-path: polygon(20% 20%, 80% 20%, 80% 80%, 20% 80%);
+            }
+            75% {
+                opacity: 0.8;
+                transform: scale(1.05) rotate(-2deg);
+                clip-path: polygon(10% 10%, 90% 10%, 90% 90%, 10% 90%);
+            }
+        }
+        
+        /* Glass Shard Particles */
+        .sign-in-btn .glass-shard {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            border-radius: 50%;
+            animation: shard-float 3s ease-in-out infinite;
+        }
+        
+        .sign-in-btn .glass-shard:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .sign-in-btn .glass-shard:nth-child(2) {
+            top: 30%;
+            right: 25%;
+            animation-delay: 0.3s;
+        }
+        
+        .sign-in-btn .glass-shard:nth-child(3) {
+            bottom: 20%;
+            left: 30%;
+            animation-delay: 0.6s;
+        }
+        
+        .sign-in-btn .glass-shard:nth-child(4) {
+            bottom: 40%;
+            right: 15%;
+            animation-delay: 0.9s;
+        }
+        
+        @keyframes shard-float {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0.5) rotate(0deg);
+            }
+            25% {
+                opacity: 0.8;
+                transform: translate(-10px, -15px) scale(1) rotate(90deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(15px, -20px) scale(1.2) rotate(180deg);
+            }
+            75% {
+                opacity: 0.6;
+                transform: translate(-5px, -25px) scale(0.8) rotate(270deg);
+            }
+        }
+        
+        /* Stop animation on hover/click */
+        .sign-in-btn:hover,
+        .sign-in-btn:active,
+        .sign-in-btn:focus {
+            animation-play-state: paused;
+        }
+        
+        .sign-in-btn:hover::before,
+        .sign-in-btn:hover::after {
+            animation-play-state: paused;
+        }
+        
+        .sign-in-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .sign-in-btn:hover::before {
+            left: 100%;
+        }
+        
+        .sign-in-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.4);
+        }
+        
+        /* Projector Button Effect */
+        .sign-in-btn.projecting {
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 0.8),
+                0 0 40px rgba(0, 255, 255, 0.6),
+                0 0 60px rgba(0, 255, 255, 0.4),
+                0 0 80px rgba(0, 255, 255, 0.2);
+            animation: projector-pulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes projector-pulse {
+            0%, 100% {
+                box-shadow: 
+                    0 0 20px rgba(0, 255, 255, 0.8),
+                    0 0 40px rgba(0, 255, 255, 0.6),
+                    0 0 60px rgba(0, 255, 255, 0.4),
+                    0 0 80px rgba(0, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 
+                    0 0 30px rgba(0, 255, 255, 1),
+                    0 0 60px rgba(0, 255, 255, 0.8),
+                    0 0 90px rgba(0, 255, 255, 0.6),
+                    0 0 120px rgba(0, 255, 255, 0.4);
+            }
+        }
+        
+        /* Mobile Navigation Toggle */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #00FFFF;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+        }
+        
+        .mobile-nav-toggle:hover {
+            color: #ff00ff;
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-nav-toggle {
+                display: block;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            .header-content {
+                position: relative;
+                padding-right: 4rem;
+            }
+            
+            nav {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                border-top: 2px solid rgba(0, 255, 255, 0.3);
+                padding: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                z-index: 999;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav a {
+                transform: translateX(-20px);
+                opacity: 0;
+                transition: all 0.3s ease;
+                transition-delay: 0.1s;
+            }
+            
+            nav.active a {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            
+            nav a:nth-child(1) { transition-delay: 0.1s; }
+            nav a:nth-child(2) { transition-delay: 0.2s; }
+            nav a:nth-child(3) { transition-delay: 0.3s; }
+            
+            /* Mobile auth buttons styling */
+            .mobile-auth-buttons {
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(0, 255, 255, 0.2);
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .mobile-sign-in,
+            .mobile-logout {
+                width: 100%;
+                justify-content: center;
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+                border-radius: 25px;
+            }
+            
+            .mobile-logout {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+                background: linear-gradient(45deg, #ef4444, #dc2626);
+            }
+            
+            .mobile-logout:hover {
+                background: linear-gradient(45deg, #dc2626, #b91c1c);
+            }
+        }
+        
+        /* Main content styles */
+        main {
+            margin-top: 100px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .hero-section {
+            padding: 8rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 50px;
+            margin-bottom: 3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .hero-badge svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 0.8rem;
+            color: #00FFFF;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        }
+        
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+        
+        .hero-title .highlight {
+            background: linear-gradient(45deg, #00FFFF, #ff00ff, #00FFFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.8)); }
+        }
+        
+        .hero-description {
+            font-size: 1.4rem;
+            color: rgba(245, 245, 245, 0.9);
+            margin-bottom: 4rem;
+            max-width: 60rem;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            color: #000;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.5);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #00FFFF;
+            padding: 1.2rem 3rem;
+            border: 3px solid #00FFFF;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+        
+        .btn-secondary:hover::before {
+            left: 0;
+        }
+        
+        .btn-secondary:hover {
+            color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+        }
+        
+        /* Services section */
+        .services-section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-description {
+            font-size: 1.3rem;
+            color: rgba(245, 245, 245, 0.9);
+            max-width: 60rem;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+            max-width: 80rem;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .service-card:hover::before {
+            left: 100%;
+        }
+        
+        .service-card:hover {
+            border-color: rgba(0, 255, 255, 0.6);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 255, 255, 0.2);
+        }
+        
+        .service-icon {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .service-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+            border-radius: 15px;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
+        .service-icon img {
+            width: 3.5rem;
+            height: 3.5rem;
+            object-fit: contain;
+            z-index: 2;
+            position: relative;
+            display: block;
+            max-width: 100%;
+            height: auto;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 0.5rem;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.3));
+        }
+        
+        .service-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #00FFFF;
+        }
+        
+        .service-description {
+            color: rgba(245, 245, 245, 0.9);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .service-features li {
+            display: flex;
+            align-items: center;
+            color: rgba(245, 245, 245, 0.9);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+        
+        .feature-bullet {
+            width: 0.8rem;
+            height: 0.8rem;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            border-radius: 50%;
+            margin-right: 1rem;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .service-link {
+            color: #00FFFF;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .service-link:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        /* Footer styles */
+        footer {
+            background: rgba(10, 10, 10, 0.95);
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(20px);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .footer-brand .logo {
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-brand p {
+            color: rgba(245, 245, 245, 0.8);
+            margin-bottom: 2rem;
+            max-width: 35rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            color: rgba(245, 245, 245, 0.8);
+            font-size: 1rem;
+        }
+        
+        .contact-item svg {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-right: 0.8rem;
+            color: #00FFFF;
+        }
+        
+        .footer-section h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #00FFFF;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section a {
+            color: rgba(245, 245, 245, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .footer-section a:hover {
+            color: #00FFFF;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .footer-bottom {
+            border-top: 2px solid rgba(0, 255, 255, 0.2);
+            margin-top: 3rem;
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(245, 245, 245, 0.7);
+            font-size: 1rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 0;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .logo img {
+                height: 2.5rem;
+                width: 2.5rem;
+            }
+            
+            .logo span {
+                font-size: 1.5rem;
+            }
+            
+            nav {
+                display: flex !important;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav a {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+                background: rgba(0, 255, 255, 0.1);
+                border-radius: 25px;
+                border: 1px solid rgba(0, 255, 255, 0.3);
+            }
+            
+            .sign-in-btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero-section {
+                padding: 4rem 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .services-section {
+                padding: 3rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .service-card {
+                padding: 2rem;
+            }
+            
+            .service-icon {
+                width: 5rem;
+                height: 5rem;
+            }
+            
+            .service-icon img {
+                width: 3rem;
+                height: 3rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            
+            .contact-info {
+                justify-content: center;
+            }
+            
+            .rocket {
+                display: none;
+            }
+            
+            .diamond {
+                width: 15px;
+                height: 15px;
+            }
+            
+            .tc-impression {
+                font-size: 8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .logo span {
+                font-size: 1.3rem;
+            }
+            
+            nav {
+                gap: 1rem;
+            }
+            
+            nav a {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+            
+            .hero-buttons {
+                gap: 0.8rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 10, 10, 0.8);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #ff00ff, #00FFFF);
+        }
+        
+        /* Authentication Modal Styles */
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .auth-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .auth-modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border: 2px solid #00FFFF;
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            transform: scale(0.1) translateY(0);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+            opacity: 0;
+        }
+        
+        .auth-modal.active .auth-modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        
+        /* Projector Light Effect */
+        .auth-modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--projector-x, 50%) var(--projector-y, 50%), 
+                        rgba(0, 255, 255, 0.3) 0%, 
+                        rgba(0, 255, 255, 0.1) 20%, 
+                        transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .auth-modal.active::before {
+            opacity: 1;
+        }
+        
+        /* Projector Beam Effect */
+        .auth-modal::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from var(--projector-angle, 0deg) at var(--projector-x, 50%) var(--projector-y, 50%), 
+                        transparent 0deg, 
+                        rgba(0, 255, 255, 0.2) 10deg, 
+                        transparent 20deg);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .auth-modal.active::after {
+            opacity: 1;
+        }
+        
+        .auth-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #00FFFF;
+        }
+        
+        .auth-modal-header h2 {
+            color: #00FFFF;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: #ff00ff;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background: rgba(255, 0, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .auth-form {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #F5F5F5;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            color: #F5F5F5;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #00FFFF;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        
+        .form-group input::placeholder {
+            color: rgba(245, 245, 245, 0.6);
+        }
+        
+        .auth-submit-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(45deg, #00FFFF, #ff00ff);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .auth-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.4);
+        }
+        
+        .auth-submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .auth-switch {
+            text-align: center;
+            color: #F5F5F5;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+        }
+        
+        .auth-switch-btn {
+            background: none;
+            border: none;
+            color: #00FFFF;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-switch-btn:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+        
+        .auth-error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #ef4444;
+            color: #fca5a5;
+            padding: 0.75rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-family: 'Rajdhani', sans-serif;
+            text-align: center;
+        }
+        
+        .auth-success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid #22c55e;
+            color: #86efac;
+            padding: 0.75rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-family: 'Rajdhani', sans-serif;
+            text-align: center;
+        }
+        
+        /* Mobile responsive for auth modal */
+        @media (max-width: 768px) {
+            .auth-modal-content {
+                width: 95%;
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .auth-modal-header h2 {
+                font-size: 1.25rem;
+            }
+            
+            .close-modal {
+                font-size: 1.5rem;
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="stars"></div>
+        <div class="rocket"></div>
+        <div class="rocket"></div>
+        <div class="rocket"></div>
+        <div class="tech-grid"></div>
+        
+        <!-- Floating Diamonds -->
+        <div class="diamond"></div>
+        <div class="diamond"></div>
+        <div class="diamond"></div>
+        <div class="diamond"></div>
+        <div class="diamond"></div>
+        
+        <!-- Floating Circles -->
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        
+        <!-- Big TC Impression -->
+        <div class="tc-impression">TC</div>
+        
+        <!-- Dispersing Diamonds around TC -->
+        <div class="tc-diamond"></div>
+        <div class="tc-diamond"></div>
+        <div class="tc-diamond"></div>
+        <div class="tc-diamond"></div>
+        <div class="tc-diamond"></div>
+        <div class="tc-diamond"></div>
+        <div class="tc-diamond"></div>
+        <div class="tc-diamond"></div>
+        
+        <!-- Covalent Bond Lines -->
+        <div class="bond-line"></div>
+        <div class="bond-line"></div>
+        <div class="bond-line"></div>
+        <div class="bond-line"></div>
+        <div class="bond-line"></div>
+        <div class="bond-line"></div>
+        
+        <!-- Dynamic Bond Connections -->
+        <div class="dynamic-bond"></div>
+        <div class="dynamic-bond"></div>
+        <div class="dynamic-bond"></div>
+    </div>
+
+    <div class="min-h-screen" id="top">
+        <header id="header">
+            <div class="container">
+                <div class="header-content">
+                    <a class="logo" href="index.html">
+                        <img alt="TC TECH DEVELOPERS Logo" src="logo (3).jpg"/>
+                        <span>TC TECH DEVELOPERS</span>
+                    </a>
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+                        ☰
+                    </button>
+                    <nav id="nav-menu">
+                        <a href="#top">Home</a>
+                        <a href="pricing.html">Pricing</a>
+                        <a href="contact.html">Contacts</a>
+                        <div class="mobile-auth-buttons">
+                            <button class="sign-in-btn mobile-sign-in" id="mobile-auth-trigger">
+                                <div class="glass-shard"></div>
+                                <div class="glass-shard"></div>
+                                <div class="glass-shard"></div>
+                                <div class="glass-shard"></div>
+                                Sign In
+                            </button>
+                            <button class="logout-btn mobile-logout" id="mobile-logout-btn" style="display: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                    <polyline points="16,17 21,12 16,7"/>
+                                    <line x1="21" y1="12" x2="9" y2="12"/>
+                                </svg>
+                                Logout
+                            </button>
+                        </div>
+                    </nav>
+                    <div class="auth-buttons">
+                        <button class="sign-in-btn" id="auth-trigger">
+                            <div class="glass-shard"></div>
+                            <div class="glass-shard"></div>
+                            <div class="glass-shard"></div>
+                            <div class="glass-shard"></div>
+                            Sign In
+                        </button>
+                        <button class="logout-btn" id="logout-btn" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16,17 21,12 16,7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="hero-section">
+                <div class="container">
+                    <div class="hero-badge fade-in">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                        </svg>
+                        <span>Premium VPN Solutions</span>
+                    </div>
+                    <h1 class="hero-title fade-in">
+                        Hey, welcome to <span class="highlight">TC TECH DEVELOPERS</span>
+                    </h1>
+                    <p class="hero-description fade-in">
+                        Advanced VPN applications with cutting-edge technology. Secure, fast, and reliable internet access with our premium VPN solutions.
+                    </p>
+                    <div class="hero-buttons fade-in">
+                        <a href="pricing.html" class="btn-primary">
+                            Explore Plans
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"/>
+                                <path d="m12 5 7 7-7 7"/>
+                            </svg>
+                        </a>
+                        <a href="contact.html" class="btn-secondary">Contact Support</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </main>
+
+        <footer>
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <a class="logo" href="index.html">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                            </svg>
+                            <span>TC TECH DEVELOPERS</span>
+                        </a>
+                        <p>
+                            Leading provider of advanced VPN solutions. Secure your digital freedom with our cutting-edge applications and uncompromising privacy protection.
+                        </p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                                </svg>
+                                tctechofficial2@gmail.com
+                            </div>
+                            <div class="contact-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+                                </svg>
+                                WhatsApp
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="pricing.html">View All Plans</a></li>
+                            <li><a href="pricing.html">Pricing</a></li>
+                            <li><a href="contact.html">Support</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Support</h3>
+                        <ul>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2024 TC TECH DEVELOPERS. All rights reserved. Powered by Telvix.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Special handling for home link to scroll to top
+        document.querySelector('a[href="#top"]').addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Mobile navigation toggle
+        const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        let isMenuOpen = false;
+        
+        mobileNavToggle.addEventListener('click', function() {
+            isMenuOpen = !isMenuOpen;
+            navMenu.classList.toggle('active');
+            
+            // Change button icon
+            if (isMenuOpen) {
+                mobileNavToggle.innerHTML = '✕';
+                mobileNavToggle.style.color = '#ff00ff';
+            } else {
+                mobileNavToggle.innerHTML = '☰';
+                mobileNavToggle.style.color = '#00FFFF';
+            }
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                isMenuOpen = false;
+                mobileNavToggle.innerHTML = '☰';
+                mobileNavToggle.style.color = '#00FFFF';
+            });
+        });
+        
+        // Auto-hide menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mobileNavToggle.contains(event.target) && !navMenu.contains(event.target)) {
+                navMenu.classList.remove('active');
+                isMenuOpen = false;
+                mobileNavToggle.innerHTML = '☰';
+                mobileNavToggle.style.color = '#00FFFF';
+            }
+        });
+        
+        // Auto-hide menu on scroll
+        window.addEventListener('scroll', function() {
+            if (isMenuOpen) {
+                navMenu.classList.remove('active');
+                isMenuOpen = false;
+                mobileNavToggle.innerHTML = '☰';
+                mobileNavToggle.style.color = '#00FFFF';
+            }
+        });
+        
+        // Authentication Modal - Wrapped in DOM ready event
+        document.addEventListener('DOMContentLoaded', function() {
+            const authModal = document.getElementById('auth-modal');
+            const authTrigger = document.getElementById('auth-trigger');
+            const closeModal = document.getElementById('close-modal');
+            const switchToSignIn = document.getElementById('switch-to-signin');
+            const switchToSignUp = document.getElementById('switch-to-signup');
+            const signInForm = document.getElementById('signin-form');
+            const signUpForm = document.getElementById('signup-form');
+            
+            // Check if elements exist
+            if (!authModal || !authTrigger || !closeModal || !switchToSignIn || !switchToSignUp || !signInForm || !signUpForm) {
+                console.error('Some authentication elements not found');
+                return;
+            }
+            
+            // Show modal when sign-in button is clicked
+            authTrigger.addEventListener('click', function() {
+                // Calculate button position for projector effect
+                const buttonRect = authTrigger.getBoundingClientRect();
+                const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+                const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+                
+                // Calculate angle from button to screen center
+                const screenCenterX = window.innerWidth / 2;
+                const screenCenterY = window.innerHeight / 2;
+                const angle = Math.atan2(screenCenterY - buttonCenterY, screenCenterX - buttonCenterX) * 180 / Math.PI;
+                
+                // Set CSS custom properties for projector effect
+                authModal.style.setProperty('--projector-x', buttonCenterX + 'px');
+                authModal.style.setProperty('--projector-y', buttonCenterY + 'px');
+                authModal.style.setProperty('--projector-angle', angle + 'deg');
+                
+                authModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                authTrigger.classList.add('projecting');
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                authModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                authTrigger.classList.remove('projecting');
+            });
+            
+            // Close modal when clicking outside
+            authModal.addEventListener('click', function(e) {
+                if (e.target === authModal) {
+                    authModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    authTrigger.classList.remove('projecting');
+                }
+            });
+            
+            // Switch between sign-in and sign-up forms
+            switchToSignIn.addEventListener('click', function() {
+                signUpForm.style.display = 'none';
+                signInForm.style.display = 'block';
+                switchToSignIn.style.display = 'none';
+                switchToSignUp.style.display = 'block';
+            });
+            
+            switchToSignUp.addEventListener('click', function() {
+                signInForm.style.display = 'none';
+                signUpForm.style.display = 'block';
+                switchToSignUp.style.display = 'none';
+                switchToSignIn.style.display = 'block';
+            });
+            
+            // Handle form submissions with real Supabase authentication
+            signInForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('signin-email').value;
+                const password = document.getElementById('signin-password').value;
+                
+                if (!email || !password) {
+                    showError('Please fill in all fields');
+                    return;
+                }
+                
+                try {
+                    const { data, error } = await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+                    
+                    if (error) {
+                        showError(error.message);
+                        return;
+                    }
+                    
+                    if (data.user) {
+                        showSuccess('Sign in successful! Welcome back!');
+                        localStorage.setItem('user-session', JSON.stringify(data));
+                        
+                        setTimeout(() => {
+                            authModal.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        }, 1500);
+                        
+                        authTrigger.classList.remove('projecting');
+                        authTrigger.innerHTML = 'Welcome, ' + email + ' ✓';
+                        authTrigger.style.background = 'linear-gradient(45deg, #10B981, #059669)';
+                    }
+                } catch (error) {
+                    showError('An error occurred during sign in');
+                    console.error('Sign in error:', error);
+                }
+            });
+            
+            signUpForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm-password').value;
+                
+                if (!email || !password || !confirmPassword) {
+                    showError('Please fill in all fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    showError('Passwords do not match');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    showError('Password must be at least 6 characters');
+                    return;
+                }
+                
+                try {
+                    const { data, error } = await supabaseClient.auth.signUp({
+                        email: email,
+                        password: password
+                    });
+                    
+                    if (error) {
+                        showError(error.message);
+                        return;
+                    }
+                    
+                    if (data.user) {
+                        showSuccess('Sign up successful! Please check your email for verification.');
+                        localStorage.setItem('user-session', JSON.stringify(data));
+                        
+                        setTimeout(() => {
+                            authModal.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        }, 2000);
+                        
+                        authTrigger.classList.remove('projecting');
+                        authTrigger.innerHTML = 'Welcome, ' + email + ' ✓';
+                        authTrigger.style.background = 'linear-gradient(45deg, #10B981, #059669)';
+                    }
+                } catch (error) {
+                    showError('An error occurred during sign up');
+                    console.error('Sign up error:', error);
+                }
+            });
+            
+            // Helper functions
+            function showError(message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'auth-error';
+                errorDiv.textContent = message;
+                document.querySelector('.auth-form').appendChild(errorDiv);
+                
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 5000);
+            }
+            
+            function showSuccess(message) {
+                const successDiv = document.createElement('div');
+                successDiv.className = 'auth-success';
+                successDiv.textContent = message;
+                document.querySelector('.auth-form').appendChild(successDiv);
+                
+                setTimeout(() => {
+                    successDiv.remove();
+                }, 5000);
+            }
+            
+            // Protect pricing page access
+            const pricingLinks = document.querySelectorAll('a[href="pricing.html"]');
+            pricingLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const session = localStorage.getItem('user-session');
+                    if (!session) {
+                        e.preventDefault();
+                        authModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        showError('Please sign in to access pricing information');
+                    }
+                });
+            });
+            
+            // Function to update UI based on session state
+            function updateAuthUI() {
+                const session = localStorage.getItem('user-session');
+                const logoutBtn = document.getElementById('logout-btn');
+                const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+                const mobileAuthTrigger = document.getElementById('mobile-auth-trigger');
+                
+                if (session) {
+                    try {
+                        const sessionData = JSON.parse(session);
+                        if (sessionData.user) {
+                            // Hide sign in button, show logout button (desktop)
+                            authTrigger.style.display = 'none';
+                            logoutBtn.style.display = 'flex';
+                            
+                            // Hide sign in button, show logout button (mobile)
+                            if (mobileAuthTrigger) mobileAuthTrigger.style.display = 'none';
+                            if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'flex';
+                            
+                            // Remove any existing click listeners from logout button (desktop)
+                            logoutBtn.replaceWith(logoutBtn.cloneNode(true));
+                            const newLogoutBtn = document.getElementById('logout-btn');
+                            
+                            // Remove any existing click listeners from logout button (mobile)
+                            if (mobileLogoutBtn) {
+                                mobileLogoutBtn.replaceWith(mobileLogoutBtn.cloneNode(true));
+                                const newMobileLogoutBtn = document.getElementById('mobile-logout-btn');
+                                
+                                // Add click event for mobile logout button
+                                newMobileLogoutBtn.addEventListener('click', async function() {
+                                    if (confirm('Do you want to sign out?')) {
+                                        await performLogout();
+                                    }
+                                });
+                            }
+                            
+                            // Add click event for desktop logout button
+                            newLogoutBtn.addEventListener('click', async function() {
+                                if (confirm('Do you want to sign out?')) {
+                                    await performLogout();
+                                }
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error parsing session:', error);
+                        localStorage.removeItem('user-session');
+                        updateAuthUI();
+                    }
+                } else {
+                    // Show sign in button, hide logout button (desktop)
+                    authTrigger.style.display = 'flex';
+                    logoutBtn.style.display = 'none';
+                    
+                    // Show sign in button, hide logout button (mobile)
+                    if (mobileAuthTrigger) mobileAuthTrigger.style.display = 'flex';
+                    if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'none';
+                    
+                    authTrigger.innerHTML = 'Sign In';
+                    authTrigger.style.background = 'linear-gradient(45deg, #ff00ff, #00FFFF)';
+                    
+                    // Remove any existing click listeners (desktop)
+                    authTrigger.replaceWith(authTrigger.cloneNode(true));
+                    const newAuthTrigger = document.getElementById('auth-trigger');
+                    newAuthTrigger.addEventListener('click', function() {
+                        authModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                    
+                    // Remove any existing click listeners (mobile)
+                    if (mobileAuthTrigger) {
+                        mobileAuthTrigger.replaceWith(mobileAuthTrigger.cloneNode(true));
+                        const newMobileAuthTrigger = document.getElementById('mobile-auth-trigger');
+                        newMobileAuthTrigger.addEventListener('click', function() {
+                            authModal.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        });
+                    }
+                }
+            }
+            
+            // Function to perform logout
+            async function performLogout() {
+                try {
+                    // Sign out from Supabase
+                    const { error } = await supabaseClient.auth.signOut();
+                    if (error) {
+                        console.error('Sign out error:', error);
+                    }
+                    
+                    // Clear local storage
+                    localStorage.removeItem('user-session');
+                    
+                    // Show logout success message
+                    showSuccess('Successfully logged out! Redirecting...');
+                    
+                    // Redirect to home page after short delay
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    // Still clear local storage and redirect
+                    localStorage.removeItem('user-session');
+                    window.location.href = 'index.html';
+                }
+            }
+            
+            // Check if user is already signed in on page load
+            window.addEventListener('load', updateAuthUI);
+            
+            // Also check when storage changes (if user signs in/out on another tab)
+            window.addEventListener('storage', updateAuthUI);
+        });
+    </script>
+    
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <div class="auth-modal-header">
+                <h2 id="auth-title">Sign Up</h2>
+                <button id="close-modal" class="close-modal">×</button>
+            </div>
+            
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="auth-form">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required placeholder="Enter your password">
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" required placeholder="Confirm your password">
+                </div>
+                <button type="submit" class="auth-submit-btn">Create Account</button>
+                <p class="auth-switch">
+                    Already have an account? <button type="button" id="switch-to-signin" class="auth-switch-btn">Sign In</button>
+                </p>
+            </form>
+            
+            <!-- Sign In Form -->
+            <form id="signin-form" class="auth-form" style="display: none;">
+                <div class="form-group">
+                    <label for="signin-email">Email</label>
+                    <input type="email" id="signin-email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="auth-submit-btn">Sign In</button>
+                <p class="auth-switch">
+                    Don't have an account? <button type="button" id="switch-to-signup" class="auth-switch-btn">Sign Up</button>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
