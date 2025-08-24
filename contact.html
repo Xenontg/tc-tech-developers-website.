@@ -2329,7 +2329,107 @@
             });
         });
         
-
+        // ===== WEBSITE SECURITY PROTECTION =====
+        
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable keyboard shortcuts for developer tools
+        document.addEventListener('keydown', function(e) {
+            // Block F12 key
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Ctrl+Shift+I (Developer Tools)
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Ctrl+Shift+J (Console)
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Ctrl+Shift+C (Element Inspector)
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Ctrl+U (View Source)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Ctrl+Shift+U (View Source alternative)
+            if (e.ctrlKey && e.shiftKey && e.key === 'U') {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // Detect when developer tools are opened
+        let devtools = {
+            open: false,
+            orientation: null
+        };
+        
+        const threshold = 160;
+        
+        const emitEvent = (isOpen, orientation) => {
+            window.dispatchEvent(new CustomEvent('devtoolschange', {
+                detail: {
+                    isOpen,
+                    orientation
+                }
+            }));
+        };
+        
+        setInterval(() => {
+            if (window.outerHeight - window.innerHeight > threshold || 
+                window.outerWidth - window.innerWidth > threshold) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    emitEvent(true, devtools.orientation);
+                    
+                    // Show warning and redirect
+                    alert('⚠️ Developer tools detected! This action is not allowed for security reasons.');
+                    window.location.href = 'https://www.tctechofficial.com';
+                }
+            } else {
+                if (devtools.open) {
+                    devtools.open = false;
+                    emitEvent(false, devtools.orientation);
+                }
+            }
+        }, 500);
+        
+        // Additional protection against console access
+        console.log('%c⚠️ STOP!', 'color: red; font-size: 50px; font-weight: bold;');
+        console.log('%cThis is a protected website. Attempting to access developer tools may result in security measures.', 'color: red; font-size: 20px;');
+        console.log('%cIf you are a developer and need to access this site legitimately, please contact the administrator.', 'color: blue; font-size: 16px;');
+        
+        // Disable text selection (optional - makes it harder to copy content)
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable drag and drop
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // ===== END WEBSITE SECURITY PROTECTION =====
         
         // Page transition effect
         document.addEventListener('DOMContentLoaded', function() {
