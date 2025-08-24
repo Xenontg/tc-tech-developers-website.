@@ -2474,7 +2474,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
-                        <p><strong>Payment Integration:</strong> KSH 50 plans require payment via IntaSend before plan details are submitted. Higher-tier plans can be submitted directly.</p>
+                        <p><strong>Payment Integration:</strong> All plans now require payment via IntaSend before plan details are submitted. Basic (KSH 50), Pro (KSH 100), and Premium (KSH 300) plans all use secure payment processing.</p>
                     </div>
                 </div>
             </div>
@@ -3235,41 +3235,44 @@
                     return;
                 }
                 
-                // Check if this is a KSH 50 plan (Basic plans)
+                // Store plan details in localStorage for payment verification
+                const planDetails = {
+                    service: service,
+                    plan: plan,
+                    price: price,
+                    duration: duration,
+                    hwid: hwid,
+                    userEmail: userEmail,
+                    timestamp: new Date().toLocaleString(),
+                    userAgent: navigator.userAgent
+                };
+                localStorage.setItem('pending-plan', JSON.stringify(planDetails));
+                
+                // Determine IntaSend payment URL based on price
+                let intaSendUrl;
                 if (price.includes('50')) {
-                    // Store plan details in localStorage for payment verification
-                    const planDetails = {
-                        service: service,
-                        plan: plan,
-                        price: price,
-                        duration: duration,
-                        hwid: hwid,
-                        userEmail: userEmail,
-                        timestamp: new Date().toLocaleString(),
-                        userAgent: navigator.userAgent
-                    };
-                    localStorage.setItem('pending-plan', JSON.stringify(planDetails));
-                    
-                    // Redirect to IntaSend payment
-                    const intaSendUrl = 'https://payment.intasend.com/checkout/881dc767-35d7-4b5a-a74f-f54acca6762d/express/';
-                    
-                    // Open payment in new window/tab
-                    const paymentWindow = window.open(intaSendUrl, '_blank', 'width=500,height=700');
-                    
-                    // Start checking for payment completion
-                    checkPaymentStatus(planDetails);
-                    
-                    // Show payment instruction
-                    alert(`Redirecting to payment for ${service} ${plan}...\n\nPlease complete your payment of ${price}.\n\nAfter successful payment, your plan details will be automatically submitted.`);
-                    
+                    intaSendUrl = 'https://payment.intasend.com/checkout/881dc767-35d7-4b5a-a74f-f54acca6762d/express/';
+                } else if (price.includes('100')) {
+                    intaSendUrl = 'https://payment.intasend.com/checkout/952bb1f1-4f88-4fa3-82d7-275c5b922974/express/';
+                } else if (price.includes('300')) {
+                    intaSendUrl = 'https://payment.intasend.com/checkout/4b7f3ff7-0f34-4503-8752-d0a618397dce/express/';
                 } else {
-                    // For non-KSH 50 plans, proceed with direct submission
-                    submitPlanDirectly(service, plan, price, duration, hwid, userEmail);
+                    // Fallback for any other prices
+                    intaSendUrl = 'https://payment.intasend.com/checkout/881dc767-35d7-4b5a-a74f-f54acca6762d/express/';
                 }
+                
+                // Redirect to IntaSend payment
+                const paymentWindow = window.open(intaSendUrl, '_blank', 'width=500,height=700');
+                
+                // Start checking for payment completion
+                checkPaymentStatus(planDetails);
+                
+                // Show payment instruction
+                alert(`Redirecting to payment for ${service} ${plan}...\n\nPlease complete your payment of ${price}.\n\nAfter successful payment, your plan details will be automatically submitted.`);
             }
             
-            // Function to submit plan directly (for non-KSH 50 plans)
-            function submitPlanDirectly(service, plan, price, duration, hwid, userEmail) {
+            // Function to submit plan details after payment verification
+            function submitPlanAfterPayment(service, plan, price, duration, hwid, userEmail) {
                 const emailSubject = `New Plan Subscription - ${service} ${plan}`;
                 const emailMessage = `
 New Plan Subscription Details:
@@ -3400,7 +3403,7 @@ This is an automated notification from your TC TECH DEVELOPERS website.
                 // Handle confirm payment button
                 confirmBtn.onclick = function() {
                     // Payment confirmed, submit plan details
-                    submitPlanDirectly(
+                    submitPlanAfterPayment(
                         planDetails.service, 
                         planDetails.plan, 
                         planDetails.price, 
