@@ -1444,6 +1444,45 @@
             font-size: 1rem;
         }
         
+        .developer-link {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .dev-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(0, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .dev-link:hover {
+            color: #00FFFF;
+            background: rgba(0, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .dev-link svg {
+            color: #00FFFF;
+            transition: all 0.3s ease;
+        }
+        
+        .dev-link:hover svg {
+            transform: scale(1.1);
+        }
+        
         /* Responsive design */
         @media (max-width: 1024px) {
             .hero-title {
@@ -2084,6 +2123,15 @@
                 
                 <div class="footer-bottom">
                     <p>&copy; 2024 TC TECH DEVELOPERS. All rights reserved. Powered by TC TECH.</p>
+                    <div class="developer-link">
+                        <a href="https://t.me/xenonlo" target="_blank" class="dev-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 2L11 13"/>
+                                <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+                            </svg>
+                            Developer
+                        </a>
+                    </div>
                 </div>
             </div>
         </footer>
