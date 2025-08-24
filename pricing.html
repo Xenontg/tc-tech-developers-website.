@@ -3250,16 +3250,24 @@
                 
                 // Determine IntaSend payment URL based on price
                 let intaSendUrl;
+                console.log('Price detected:', price);
+                
                 if (price.includes('50')) {
                     intaSendUrl = 'https://payment.intasend.com/checkout/881dc767-35d7-4b5a-a74f-f54acca6762d/express/';
+                    console.log('Using KSH 50 payment link');
                 } else if (price.includes('100')) {
                     intaSendUrl = 'https://payment.intasend.com/checkout/952bb1f1-4f88-4fa3-82d7-275c5b922974/express/';
+                    console.log('Using KSH 100 payment link');
                 } else if (price.includes('300')) {
                     intaSendUrl = 'https://payment.intasend.com/checkout/4b7f3ff7-0f34-4503-8752-d0a618397dce/express/';
+                    console.log('Using KSH 300 payment link');
                 } else {
                     // Fallback for any other prices
                     intaSendUrl = 'https://payment.intasend.com/checkout/881dc767-35d7-4b5a-a74f-f54acca6762d/express/';
+                    console.log('Using fallback payment link for price:', price);
                 }
+                
+                console.log('Final IntaSend URL:', intaSendUrl);
                 
                 // Redirect to IntaSend payment
                 const paymentWindow = window.open(intaSendUrl, '_blank', 'width=500,height=700');
@@ -3326,10 +3334,6 @@ This is an automated notification from your TC TECH DEVELOPERS website.
                     // Show success message immediately
                     alert(`Plan submitted successfully!\n\nService: ${service}\nPlan: ${plan}\nPrice: ${price}\nDuration: ${duration}\nHWID: ${hwid}\nUser Email: ${userEmail}\n\nYou will receive confirmation details soon!`);
                     
-                    // Clear the HWID input
-                    const hwidInput = document.getElementById(hwidFieldId);
-                    if (hwidInput) hwidInput.value = '';
-                    
                     // Show success message
                     showSuccess('Plan submitted successfully! Email sent to admin.');
                     
@@ -3357,9 +3361,6 @@ This is an automated notification from your TC TECH DEVELOPERS website.
                         alert(`Plan submitted! Please save these details:\n\n${detailsText}`);
                     }
                     
-                    // Clear the input
-                    const hwidInput = document.getElementById(hwidFieldId);
-                    if (hwidInput) hwidInput.value = '';
                     showSuccess('Plan submitted! Please contact us with your details.');
                 }
             }
