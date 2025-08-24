@@ -2441,11 +2441,12 @@
                 // Successfully signed in
                 authModal.classList.remove('active');
                 document.body.style.overflow = 'auto';
-                authTrigger.innerHTML = 'Welcome, ' + (data.user.email || 'User') + ' ✓';
-                authTrigger.style.background = 'linear-gradient(45deg, #10B981, #059669)';
                 
                 // Store user session
                 localStorage.setItem('user-session', JSON.stringify(data));
+                
+                // Update UI immediately
+                updateAuthUI();
                 
             } catch (error) {
                 showError('Sign-in failed: ' + error.message);
@@ -2512,6 +2513,13 @@
         function updateAuthUI() {
             const session = localStorage.getItem('user-session');
             const logoutBtn = document.getElementById('logout-btn');
+            const authTrigger = document.getElementById('auth-trigger');
+            
+            if (!authTrigger || !logoutBtn) {
+                console.log('Auth elements not found, retrying...');
+                setTimeout(updateAuthUI, 100);
+                return;
+            }
             
             if (session) {
                 try {
@@ -2571,8 +2579,11 @@
                 authTrigger.replaceWith(authTrigger.cloneNode(true));
                 const newAuthTrigger = document.getElementById('auth-trigger');
                 newAuthTrigger.addEventListener('click', function() {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+                    const authModal = document.getElementById('auth-modal');
+                    if (authModal) {
+                        authModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
                 });
             }
         }
