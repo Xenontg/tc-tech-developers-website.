@@ -15,7 +15,13 @@
             // Initialize Supabase client with real credentials
             const supabaseUrl = 'https://nwvgfheincbqvpubrefg.supabase.co';
             const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53dmdmaGVpbmNicXZwdWJyZWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5NDE0MzksImV4cCI6MjA3MTUxNzQzOX0.DqQqLkjlVSPqon3rggBh1fM2EXDBiw1gLtGvsNViL_w';
-            const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+            const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey, {
+                auth: {
+                    redirectTo: 'https://www.tctechofficial.com',
+                    autoRefreshToken: true,
+                    persistSession: true
+                }
+            });
         </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
