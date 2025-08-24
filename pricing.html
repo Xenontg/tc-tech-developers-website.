@@ -1339,6 +1339,38 @@
             color: #F5F5F5;
         }
         
+        .payment-info-note {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 12px;
+            margin: 1rem auto 2rem auto;
+            max-width: 800px;
+            backdrop-filter: blur(20px);
+        }
+        
+        .payment-info-note .note-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            color: #ff6b6b;
+        }
+        
+        .payment-info-note .note-content svg {
+            flex-shrink: 0;
+            color: #ff6b6b;
+        }
+        
+        .payment-info-note .note-content p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .payment-info-note .note-content strong {
+            color: #F5F5F5;
+        }
+        
         .pricing-section {
             padding: 6rem 0;
             position: relative;
@@ -2106,6 +2138,207 @@
                 height: 35px;
             }
         }
+        
+        /* Payment Modal Styles */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .payment-modal.active {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .payment-modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border: 2px solid #00FFFF;
+            border-radius: 20px;
+            padding: 0;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: scale(0.7);
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+        }
+        
+        .payment-modal.active .payment-modal-content {
+            transform: scale(1);
+        }
+        
+        .payment-modal::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00FFFF, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+            border-radius: 20px;
+            z-index: -1;
+            animation: border-glow 3s ease-in-out infinite;
+        }
+        
+        .payment-modal::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 18px;
+            z-index: -1;
+        }
+        
+        .payment-modal-header {
+            background: linear-gradient(135deg, #00FFFF 0%, #4ecdc4 100%);
+            color: #1a1a2e;
+            padding: 20px;
+            border-radius: 18px 18px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .payment-modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        
+        .payment-modal-body {
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .payment-status {
+            margin-bottom: 30px;
+        }
+        
+        .payment-icon {
+            color: #00FFFF;
+            margin-bottom: 20px;
+            animation: tc-pulse 2s ease-in-out infinite;
+        }
+        
+        .payment-status h3 {
+            color: #F5F5F5;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .payment-status p {
+            color: #B0B0B0;
+            line-height: 1.6;
+        }
+        
+        .payment-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .payment-confirm-btn {
+            background: linear-gradient(135deg, #00FFFF 0%, #4ecdc4 100%);
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .payment-confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.4);
+        }
+        
+        .payment-cancel-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: #F5F5F5;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .payment-cancel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .payment-note {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .payment-note p {
+            color: #B0B0B0;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .payment-note strong {
+            color: #00FFFF;
+        }
+        
+        /* Mobile Responsiveness for Payment Modal */
+        @media (max-width: 768px) {
+            .payment-modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+            
+            .payment-modal-header {
+                padding: 15px;
+            }
+            
+            .payment-modal-header h2 {
+                font-size: 1.25rem;
+            }
+            
+            .payment-modal-body {
+                padding: 20px;
+            }
+            
+            .payment-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .payment-confirm-btn,
+            .payment-cancel-btn {
+                width: 100%;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2230,6 +2463,18 @@
                             <path d="m9 12 2 2 4-4"/>
                         </svg>
                         <p><strong>Important:</strong> Your email address will be automatically included from your account when you submit a plan. Just enter your Hardware ID/Device ID and choose your plan!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Integration Note -->
+            <div class="payment-info-note fade-in">
+                <div class="container">
+                    <div class="note-content payment-note-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <p><strong>Payment Integration:</strong> KSH 50 plans require payment via IntaSend before plan details are submitted. Higher-tier plans can be submitted directly.</p>
                     </div>
                 </div>
             </div>
@@ -2948,7 +3193,7 @@
             // Also check when storage changes (if user signs in/out on another tab)
             window.addEventListener('storage', updateAuthUI);
             
-            // Plan submission and email functionality
+            // Plan submission and email functionality with IntaSend payment integration
             function submitPlan(service, plan, price, duration, hwidFieldId) {
                 console.log('submitPlan called with:', service, plan, price, duration, hwidFieldId);
                 
@@ -2990,18 +3235,41 @@
                     return;
                 }
                 
-                // Prepare email data
-                const emailData = {
-                    service: service,
-                    plan: plan,
-                    price: price,
-                    duration: duration,
-                    hwid: hwid,
-                    userEmail: userEmail,
-                    timestamp: new Date().toLocaleString(),
-                    userAgent: navigator.userAgent
-                };
-                
+                // Check if this is a KSH 50 plan (Basic plans)
+                if (price.includes('50')) {
+                    // Store plan details in localStorage for payment verification
+                    const planDetails = {
+                        service: service,
+                        plan: plan,
+                        price: price,
+                        duration: duration,
+                        hwid: hwid,
+                        userEmail: userEmail,
+                        timestamp: new Date().toLocaleString(),
+                        userAgent: navigator.userAgent
+                    };
+                    localStorage.setItem('pending-plan', JSON.stringify(planDetails));
+                    
+                    // Redirect to IntaSend payment
+                    const intaSendUrl = 'https://payment.intasend.com/checkout/881dc767-35d7-4b5a-a74f-f54acca6762d/express/';
+                    
+                    // Open payment in new window/tab
+                    const paymentWindow = window.open(intaSendUrl, '_blank', 'width=500,height=700');
+                    
+                    // Start checking for payment completion
+                    checkPaymentStatus(planDetails);
+                    
+                    // Show payment instruction
+                    alert(`Redirecting to payment for ${service} ${plan}...\n\nPlease complete your payment of ${price}.\n\nAfter successful payment, your plan details will be automatically submitted.`);
+                    
+                } else {
+                    // For non-KSH 50 plans, proceed with direct submission
+                    submitPlanDirectly(service, plan, price, duration, hwid, userEmail);
+                }
+            }
+            
+            // Function to submit plan directly (for non-KSH 50 plans)
+            function submitPlanDirectly(service, plan, price, duration, hwid, userEmail) {
                 const emailSubject = `New Plan Subscription - ${service} ${plan}`;
                 const emailMessage = `
 New Plan Subscription Details:
@@ -3012,8 +3280,8 @@ Price: ${price}
 Duration: ${duration}
 HWID/Device ID: ${hwid}
 User Email: ${userEmail}
-Timestamp: ${emailData.timestamp}
-User Agent: ${emailData.userAgent}
+Timestamp: ${new Date().toLocaleString()}
+User Agent: ${navigator.userAgent}
 
 This is an automated notification from your TC TECH DEVELOPERS website.
                 `;
@@ -3035,7 +3303,7 @@ This is an automated notification from your TC TECH DEVELOPERS website.
                     'duration': duration,
                     'hwid': hwid,
                     'user_email': userEmail,
-                    'timestamp': emailData.timestamp
+                    'timestamp': new Date().toLocaleString()
                 };
                 
                 Object.keys(fields).forEach(key => {
@@ -3056,21 +3324,24 @@ This is an automated notification from your TC TECH DEVELOPERS website.
                     alert(`Plan submitted successfully!\n\nService: ${service}\nPlan: ${plan}\nPrice: ${price}\nDuration: ${duration}\nHWID: ${hwid}\nUser Email: ${userEmail}\n\nYou will receive confirmation details soon!`);
                     
                     // Clear the HWID input
-                    hwidInput.value = '';
+                    const hwidInput = document.getElementById(hwidFieldId);
+                    if (hwidInput) hwidInput.value = '';
                     
                     // Show success message
                     showSuccess('Plan submitted successfully! Email sent to admin.');
                     
                     // Remove the form after a short delay
                     setTimeout(() => {
-                        document.body.removeChild(form);
+                        if (document.body.contains(form)) {
+                            document.body.removeChild(form);
+                        }
                     }, 1000);
                     
                 } catch (error) {
                     console.error('Form submission error:', error);
                     
                     // Fallback: Copy details to clipboard and show them
-                    const detailsText = `Service: ${service}\nPlan: ${plan}\nPrice: ${price}\nDuration: ${duration}\nHWID: ${hwid}\nUser Email: ${userEmail}\nTimestamp: ${emailData.timestamp}`;
+                    const detailsText = `Service: ${service}\nPlan: ${plan}\nPrice: ${price}\nDuration: ${duration}\nHWID: ${hwid}\nUser Email: ${userEmail}\nTimestamp: ${new Date().toLocaleString()}`;
                     
                     // Try to copy to clipboard
                     if (navigator.clipboard) {
@@ -3084,9 +3355,98 @@ This is an automated notification from your TC TECH DEVELOPERS website.
                     }
                     
                     // Clear the input
-                    hwidInput.value = '';
+                    const hwidInput = document.getElementById(hwidFieldId);
+                    if (hwidInput) hwidInput.value = '';
                     showSuccess('Plan submitted! Please contact us with your details.');
                 }
+            }
+            
+            // Function to check payment status
+            function checkPaymentStatus(planDetails) {
+                // Check every 5 seconds for payment completion
+                const paymentCheckInterval = setInterval(() => {
+                    // Check if user has returned from payment
+                    if (document.hasFocus()) {
+                        // Clear the interval
+                        clearInterval(paymentCheckInterval);
+                        
+                        // Show payment verification modal
+                        showPaymentModal(planDetails);
+                    }
+                }, 5000);
+                
+                // Stop checking after 10 minutes (120 checks)
+                setTimeout(() => {
+                    clearInterval(paymentCheckInterval);
+                    localStorage.removeItem('pending-plan');
+                    console.log('Payment check timeout - user may have abandoned payment');
+                }, 600000);
+            }
+            
+            // Function to show payment verification modal
+            function showPaymentModal(planDetails) {
+                const paymentModal = document.getElementById('payment-modal');
+                const paymentDetails = document.getElementById('payment-details');
+                const confirmBtn = document.getElementById('confirm-payment');
+                const cancelBtn = document.getElementById('cancel-payment');
+                const closeBtn = document.getElementById('close-payment-modal');
+                
+                // Update modal content with plan details
+                paymentDetails.textContent = `Please complete your payment of ${planDetails.price} for ${planDetails.service} ${planDetails.plan} to proceed with your subscription.`;
+                
+                // Show modal
+                paymentModal.classList.add('active');
+                
+                // Handle confirm payment button
+                confirmBtn.onclick = function() {
+                    // Payment confirmed, submit plan details
+                    submitPlanDirectly(
+                        planDetails.service, 
+                        planDetails.plan, 
+                        planDetails.price, 
+                        planDetails.duration, 
+                        planDetails.hwid, 
+                        planDetails.userEmail
+                    );
+                    
+                    // Clear pending plan
+                    localStorage.removeItem('pending-plan');
+                    
+                    // Hide modal
+                    paymentModal.classList.remove('active');
+                    
+                    // Show success message
+                    showSuccess('Payment verified! Plan details submitted successfully.');
+                };
+                
+                // Handle cancel payment button
+                cancelBtn.onclick = function() {
+                    // Payment not completed
+                    alert('Payment not completed. Please try again when you\'re ready to pay.');
+                    
+                    // Clear pending plan
+                    localStorage.removeItem('pending-plan');
+                    
+                    // Hide modal
+                    paymentModal.classList.remove('active');
+                };
+                
+                // Handle close button
+                closeBtn.onclick = function() {
+                    // Clear pending plan
+                    localStorage.removeItem('pending-plan');
+                    
+                    // Hide modal
+                    paymentModal.classList.remove('active');
+                };
+                
+                // Close modal when clicking outside
+                paymentModal.onclick = function(e) {
+                    if (e.target === paymentModal) {
+                        localStorage.removeItem('pending-plan');
+                        paymentModal.classList.remove('active');
+                    }
+                };
             }
             
             // Make submitPlan function globally accessible
@@ -3148,5 +3508,32 @@ This is an automated notification from your TC TECH DEVELOPERS website.
         <input type="hidden" name="subject" id="email-subject">
         <input type="hidden" name="message" id="email-message">
     </form>
+    
+    <!-- Payment Verification Modal -->
+    <div id="payment-modal" class="payment-modal">
+        <div class="payment-modal-content">
+            <div class="payment-modal-header">
+                <h2>Payment Verification</h2>
+                <button id="close-payment-modal" class="close-modal">×</button>
+            </div>
+            <div class="payment-modal-body">
+                <div class="payment-status">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="payment-icon">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                    <h3>Complete Your Payment</h3>
+                    <p id="payment-details">Please complete your payment to proceed with your plan subscription.</p>
+                </div>
+                <div class="payment-actions">
+                    <button id="confirm-payment" class="payment-confirm-btn">Payment Completed</button>
+                    <button id="cancel-payment" class="payment-cancel-btn">Cancel Payment</button>
+                </div>
+                <div class="payment-note">
+                    <p><strong>Note:</strong> After completing payment on IntaSend, click "Payment Completed" to submit your plan details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
