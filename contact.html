@@ -19,7 +19,8 @@
                 auth: {
                     redirectTo: 'https://www.tctechofficial.com',
                     autoRefreshToken: true,
-                    persistSession: true
+                    persistSession: true,
+                    detectSessionInUrl: true
                 }
             });
         </script>
@@ -2641,19 +2642,54 @@
             try {
                 const { data, error } = await supabaseClient.auth.signUp({
                     email: email,
-                    password: password
+                    password: password,
+                    options: {
+                        emailRedirectTo: 'https://www.tctechofficial.com',
+                        data: {
+                            email_confirmed: true
+                        }
+                    }
                 });
                 
                 if (error) throw error;
                 
                 // Successfully signed up
-                showSuccess('Account created successfully! Please check your email for verification.');
+                showSuccess('Account created successfully! Automatically signing you in...');
                 
-                // Switch to sign-in form
-                signUpForm.style.display = 'none';
-                signInForm.style.display = 'block';
-                switchToSignUp.style.display = 'none';
-                switchToSignIn.style.display = 'block';
+                // Auto sign in after successful signup
+                try {
+                    const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+                    
+                    if (signInError) {
+                        showError('Auto sign-in failed: ' + signInError.message);
+                        // Switch to sign-in form if auto sign-in fails
+                        signUpForm.style.display = 'none';
+                        signInForm.style.display = 'block';
+                        switchToSignUp.style.display = 'none';
+                        switchToSignIn.style.display = 'block';
+                    } else {
+                        showSuccess('Welcome! You are now signed in.');
+                        updateAuthUI();
+                        // Close modal after successful auto sign-in
+                        setTimeout(() => {
+                            const authModal = document.querySelector('.auth-modal');
+                            if (authModal) {
+                                authModal.classList.remove('active');
+                                document.body.style.overflow = 'auto';
+                            }
+                        }, 2000);
+                    }
+                } catch (signInError) {
+                    showError('Auto sign-in failed. Please sign in manually.');
+                    // Switch to sign-in form if auto sign-in fails
+                    signUpForm.style.display = 'none';
+                    signInForm.style.display = 'block';
+                    switchToSignUp.style.display = 'none';
+                    switchToSignIn.style.display = 'block';
+                }
                 
             } catch (error) {
                 showError('Sign-up failed: ' + error.message);

@@ -15,13 +15,14 @@
         // Initialize Supabase client with real credentials
         const supabaseUrl = 'https://nwvgfheincbqvpubrefg.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53dmdmaGVpbmNicXZwdWJyZWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5NDE0MzksImV4cCI6MjA3MTUxNzQzOX0.DqQqLkjlVSPqon3rggBh1fM2EXDBiw1gLtGvsNViL_w';
-        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey, {
-            auth: {
-                redirectTo: 'https://www.tctechofficial.com',
-                autoRefreshToken: true,
-                persistSession: true
-            }
-        });
+                    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey, {
+                auth: {
+                    redirectTo: 'https://www.tctechofficial.com',
+                    autoRefreshToken: true,
+                    persistSession: true,
+                    detectSessionInUrl: true
+                }
+            });
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
@@ -3167,7 +3168,13 @@
                 try {
                     const { data, error } = await supabaseClient.auth.signUp({
                         email: email,
-                        password: password
+                        password: password,
+                        options: {
+                            emailRedirectTo: 'https://www.tctechofficial.com',
+                            data: {
+                                email_confirmed: true
+                            }
+                        }
                     });
                     
                     if (error) {
@@ -3176,17 +3183,30 @@
                     }
                     
                     if (data.user) {
-                        showSuccess('Sign up successful! Please check your email for verification.');
+                        showSuccess('Sign up successful! Automatically signing you in...');
                         localStorage.setItem('user-session', JSON.stringify(data));
+                        
+                        // Auto sign in after successful signup
+                        try {
+                            const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
+                                email: email,
+                                password: password
+                            });
+                            
+                            if (signInError) {
+                                showError('Auto sign-in failed: ' + signInError.message);
+                            } else {
+                                showSuccess('Welcome! You are now signed in.');
+                                updateAuthUI();
+                            }
+                        } catch (signInError) {
+                            showError('Auto sign-in failed. Please sign in manually.');
+                        }
                         
                         setTimeout(() => {
                             authModal.classList.remove('active');
                             document.body.style.overflow = 'auto';
                         }, 2000);
-                        
-                        authTrigger.classList.remove('projecting');
-                        authTrigger.innerHTML = 'Welcome, ' + email + ' ✓';
-                        authTrigger.style.background = 'linear-gradient(45deg, #10B981, #059669)';
                     }
                 } catch (error) {
                     showError('An error occurred during sign up');
