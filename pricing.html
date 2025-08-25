@@ -3491,38 +3491,24 @@
                         return { supported: false, reason: 'HTTPS required for biometric login' };
                     }
                     
-                    // Enhanced mobile detection
+                    // Enhanced mobile detection - be more permissive on mobile
                     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                     
-                    // Check if platform authenticator is available
+                    // On mobile devices, assume fingerprint support is available
+                    if (isMobile) {
+                        console.log('Mobile device detected - assuming fingerprint support');
+                        return { supported: true, reason: 'Mobile device - fingerprint likely available' };
+                    }
+                    
+                    // For desktop, do more thorough checks
                     if (PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
                         try {
                             const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
                             if (available) {
-                                return { supported: true, reason: 'Biometric authentication available' };
+                                return { supported: true, reason: 'Desktop biometric authentication available' };
                             }
                         } catch (error) {
-                            console.log('Platform authenticator check failed, trying alternative detection');
-                        }
-                    }
-                    
-                    // Alternative detection for mobile devices
-                    if (isMobile) {
-                        // Check for common mobile biometric indicators
-                        if (navigator.credentials && navigator.credentials.create) {
-                            return { supported: true, reason: 'Mobile biometric authentication available' };
-                        }
-                        
-                        // Check for specific mobile capabilities
-                        if (window.PublicKeyCredential && PublicKeyCredential.isConditionalMediationAvailable) {
-                            try {
-                                const conditional = await PublicKeyCredential.isConditionalMediationAvailable();
-                                if (conditional) {
-                                    return { supported: true, reason: 'Conditional biometric authentication available' };
-                                }
-                            } catch (error) {
-                                console.log('Conditional mediation check failed');
-                            }
+                            console.log('Desktop platform authenticator check failed');
                         }
                     }
                     
