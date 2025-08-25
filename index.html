@@ -2509,178 +2509,79 @@
                 switchToSignIn.style.display = 'block';
             });
             
-            // Handle form submissions with real Supabase authentication - BULLETPROOF VERSION
-            function attachSignInHandler() {
-                const submitBtn = signInForm.querySelector('.auth-submit-btn');
-                if (!submitBtn) {
-                    setTimeout(attachSignInHandler, 100);
-                    return;
-                }
-                
-                // Remove any existing listeners
-                const newSubmitBtn = submitBtn.cloneNode(true);
-                submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
-                
-                // Add new listener
-                newSubmitBtn.addEventListener('click', async function(e) {
+            // SIMPLE AND RELIABLE SIGN-IN HANDLER
+            signInForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                await performSignIn();
+            });
+            
+            // Also add click handler to the button
+            const signInBtn = signInForm.querySelector('.auth-submit-btn');
+            if (signInBtn) {
+                signInBtn.addEventListener('click', async function(e) {
                     e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Show loading state
-                    const btn = e.target;
-                    const originalText = btn.textContent;
-                    btn.textContent = 'Signing In...';
-                    btn.disabled = true;
-                    
-                    try {
-                        const emailInput = document.getElementById('signin-email');
-                        const passwordInput = document.getElementById('signin-password');
-                        
-                        if (!emailInput || !passwordInput) {
-                            showError('Form elements not found. Please refresh the page.');
-                            return;
-                        }
-                        
-                        const email = emailInput.value.trim();
-                        const password = passwordInput.value;
-                        
-                        if (!email || !password) {
-                            showError('Please fill in all fields');
-                            return;
-                        }
-                        
-                        // Attempt sign in with Supabase
-                        const { data, error } = await supabaseClient.auth.signInWithPassword({
-                            email: email,
-                            password: password
-                        });
-                        
-                        if (error) {
-                            showError('Sign in failed: ' + error.message);
-                            return;
-                        }
-                        
-                        if (data && data.user) {
-                            showSuccess('Sign in successful! Welcome back!');
-                            localStorage.setItem('user-session', JSON.stringify(data));
-                            
-                            // Store biometric credentials for future use
-                            storeBiometricCredentials(email, password);
-                            
-                            // Update UI to show logged-in state
-                            updateAuthUI();
-                            
-                            // Close modal after success
-                            setTimeout(() => {
-                                authModal.classList.remove('active');
-                                document.body.style.overflow = 'auto';
-                            }, 1500);
-                        } else {
-                            showError('Sign in failed: Invalid response from server');
-                        }
-                        
-                    } catch (error) {
-                        showError('Sign in failed: ' + (error.message || 'Unknown error'));
-                    } finally {
-                        // Restore button state
-                        btn.textContent = originalText;
-                        btn.disabled = false;
-                    }
+                    await performSignIn();
                 });
             }
             
-            // Also add traditional form submit handler as backup
-            signInForm.addEventListener('submit', function(e) {
-                e.preventDefault();
+            // Main sign-in function
+            async function performSignIn() {
                 const submitBtn = signInForm.querySelector('.auth-submit-btn');
-                if (submitBtn) {
-                    submitBtn.click();
-                }
-            });
-            
-            // Initialize the sign-in handler
-            attachSignInHandler();
-            
-            // Additional backup: direct button click handler
-            setTimeout(() => {
-                const signInBtn = document.querySelector('#signin-form .auth-submit-btn');
-                if (signInBtn) {
-                    signInBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleSignIn();
-                    });
-                }
-            }, 500);
-            
-            // Global sign-in function that can be called from anywhere
-            window.handleSignIn = async function() {
-                const emailInput = document.getElementById('signin-email');
-                const passwordInput = document.getElementById('signin-password');
-                
-                if (!emailInput || !passwordInput) {
-                    showError('Form elements not found. Please refresh the page.');
-                    return;
-                }
-                
-                const email = emailInput.value.trim();
-                const password = passwordInput.value;
-                
-                if (!email || !password) {
-                    showError('Please fill in all fields');
-                    return;
-                }
+                const originalText = submitBtn.textContent;
                 
                 // Show loading state
-                const submitBtn = document.querySelector('#signin-form .auth-submit-btn');
-                if (submitBtn) {
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = 'Signing In...';
-                    submitBtn.disabled = true;
+                submitBtn.textContent = 'Signing In...';
+                submitBtn.disabled = true;
+                
+                try {
+                    const email = document.getElementById('signin-email').value.trim();
+                    const password = document.getElementById('signin-password').value;
                     
-                    try {
-                        // Attempt sign in with Supabase
-                        const { data, error } = await supabaseClient.auth.signInWithPassword({
-                            email: email,
-                            password: password
-                        });
-                        
-                        if (error) {
-                            showError('Sign in failed: ' + error.message);
-                            return;
-                        }
-                        
-                        if (data && data.user) {
-                            showSuccess('Sign in successful! Welcome back!');
-                            localStorage.setItem('user-session', JSON.stringify(data));
-                            
-                            // Store biometric credentials for future use
-                            storeBiometricCredentials(email, password);
-                            
-                            // Update UI to show logged-in state
-                            updateAuthUI();
-                            
-                            // Close modal after success
-                            setTimeout(() => {
-                                const authModal = document.getElementById('auth-modal');
-                                if (authModal) {
-                                    authModal.classList.remove('active');
-                                    document.body.style.overflow = 'auto';
-                                }
-                            }, 1500);
-                        } else {
-                            showError('Sign in failed: Invalid response from server');
-                        }
-                        
-                    } catch (error) {
-                        showError('Sign in failed: ' + (error.message || 'Unknown error'));
-                    } finally {
-                        // Restore button state
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
+                    if (!email || !password) {
+                        showError('Please fill in all fields');
+                        return;
                     }
+                    
+                    // Attempt sign in with Supabase
+                    const { data, error } = await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+                    
+                    if (error) {
+                        showError('Sign in failed: ' + error.message);
+                        return;
+                    }
+                    
+                    if (data && data.user) {
+                        showSuccess('Sign in successful! Welcome back!');
+                        localStorage.setItem('user-session', JSON.stringify(data));
+                        
+                        // Store biometric credentials for future use
+                        storeBiometricCredentials(email, password);
+                        
+                        // Update UI to show logged-in state
+                        updateAuthUI();
+                        
+                        // Close modal after success
+                        setTimeout(() => {
+                            authModal.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        }, 1500);
+                    } else {
+                        showError('Sign in failed: Invalid response from server');
+                    }
+                    
+                } catch (error) {
+                    showError('Sign in failed: ' + (error.message || 'Unknown error'));
+                } finally {
+                    // Restore button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
                 }
-            };
+            }
+            
+
             
             signUpForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
