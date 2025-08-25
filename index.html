@@ -2512,37 +2512,34 @@
             // Handle form submissions with real Supabase authentication
             signInForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                console.log('Sign-in form submitted!');
                 
-                const email = document.getElementById('signin-email').value;
-                const password = document.getElementById('signin-password').value;
-                
-                console.log('Form values:', { email, password: password ? '***' : 'empty' });
-                
-                if (!email || !password) {
-                    showError('Please fill in all fields');
-                    return;
-                }
+                // Show loading state
+                const submitBtn = signInForm.querySelector('.auth-submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Signing In...';
+                submitBtn.disabled = true;
                 
                 try {
-                    console.log('Attempting sign in with:', { email, password: password ? '***' : 'empty' });
-                    console.log('Supabase client:', supabaseClient);
+                    const email = document.getElementById('signin-email').value.trim();
+                    const password = document.getElementById('signin-password').value;
                     
+                    if (!email || !password) {
+                        showError('Please fill in all fields');
+                        return;
+                    }
+                    
+                    // Attempt sign in with Supabase
                     const { data, error } = await supabaseClient.auth.signInWithPassword({
                         email: email,
                         password: password
                     });
                     
-                    console.log('Sign in response:', { data, error });
-                    
                     if (error) {
-                        console.error('Supabase sign in error:', error);
-                        showError(error.message);
+                        showError('Sign in failed: ' + error.message);
                         return;
                     }
                     
-                    if (data.user) {
-                        console.log('Sign in successful for user:', data.user.email);
+                    if (data && data.user) {
                         showSuccess('Sign in successful! Welcome back!');
                         localStorage.setItem('user-session', JSON.stringify(data));
                         
@@ -2552,17 +2549,21 @@
                         // Update UI to show logged-in state
                         updateAuthUI();
                         
+                        // Close modal after success
                         setTimeout(() => {
                             authModal.classList.remove('active');
                             document.body.style.overflow = 'auto';
                         }, 1500);
                     } else {
-                        console.log('No user data in response');
-                        showError('Sign in failed: No user data received');
+                        showError('Sign in failed: Invalid response from server');
                     }
+                    
                 } catch (error) {
-                    console.error('Unexpected sign in error:', error);
-                    showError('An error occurred during sign in: ' + error.message);
+                    showError('Sign in failed: ' + (error.message || 'Unknown error'));
+                } finally {
+                    // Restore button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
                 }
             });
             
@@ -2942,44 +2943,7 @@
             // Initialize biometric authentication on page load
             window.addEventListener('load', initBiometricAuth);
             
-            // Add test sign-in button for debugging
-            const testSignInBtn = document.getElementById('test-signin-btn');
-            if (testSignInBtn) {
-                testSignInBtn.addEventListener('click', async function() {
-                    console.log('Test sign-in button clicked!');
-                    const email = document.getElementById('signin-email').value;
-                    const password = document.getElementById('signin-password').value;
-                    
-                    console.log('Test values:', { email, password: password ? '***' : 'empty' });
-                    
-                    if (!email || !password) {
-                        showError('Please fill in email and password first');
-                        return;
-                    }
-                    
-                    try {
-                        console.log('Test: Attempting sign in with Supabase...');
-                        const { data, error } = await supabaseClient.auth.signInWithPassword({
-                            email: email,
-                            password: password
-                        });
-                        
-                        console.log('Test: Supabase response:', { data, error });
-                        
-                        if (error) {
-                            showError('Test sign-in failed: ' + error.message);
-                        } else if (data.user) {
-                            showSuccess('Test sign-in successful! User: ' + data.user.email);
-                            localStorage.setItem('user-session', JSON.stringify(data));
-                            storeBiometricCredentials(email, password);
-                            updateAuthUI();
-                        }
-                    } catch (err) {
-                        console.error('Test sign-in error:', err);
-                        showError('Test sign-in error: ' + err.message);
-                    }
-                });
-            }
+
         });
     </script>
     
@@ -3022,7 +2986,6 @@
                     <input type="password" id="signin-password" required placeholder="Enter your password">
                 </div>
                 <button type="submit" class="auth-submit-btn">Sign In</button>
-                <button type="button" id="test-signin-btn" class="auth-submit-btn" style="background: #ff6b6b; margin-top: 10px;">Test Sign In (Debug)</button>
                 <div class="biometric-login">
                     <button type="button" id="fingerprint-btn" class="biometric-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
