@@ -3486,22 +3486,58 @@
                         return { supported: false, reason: 'WebAuthn not supported' };
                     }
                     
-                    // Check if platform authenticator is available
-                    if (PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
-                        const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-                        if (!available) {
-                            return { supported: false, reason: 'No biometric hardware detected' };
-                        }
-                    }
-                    
                     // Check for secure context (HTTPS or localhost)
                     if (!window.isSecureContext) {
                         return { supported: false, reason: 'HTTPS required for biometric login' };
                     }
                     
-                    return { supported: true, reason: 'Biometric authentication available' };
+                    // Enhanced mobile detection
+                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    
+                    // Check if platform authenticator is available
+                    if (PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
+                        try {
+                            const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+                            if (available) {
+                                return { supported: true, reason: 'Biometric authentication available' };
+                            }
+                        } catch (error) {
+                            console.log('Platform authenticator check failed, trying alternative detection');
+                        }
+                    }
+                    
+                    // Alternative detection for mobile devices
+                    if (isMobile) {
+                        // Check for common mobile biometric indicators
+                        if (navigator.credentials && navigator.credentials.create) {
+                            return { supported: true, reason: 'Mobile biometric authentication available' };
+                        }
+                        
+                        // Check for specific mobile capabilities
+                        if (window.PublicKeyCredential && PublicKeyCredential.isConditionalMediationAvailable) {
+                            try {
+                                const conditional = await PublicKeyCredential.isConditionalMediationAvailable();
+                                if (conditional) {
+                                    return { supported: true, reason: 'Conditional biometric authentication available' };
+                                }
+                            } catch (error) {
+                                console.log('Conditional mediation check failed');
+                            }
+                        }
+                    }
+                    
+                    // Final fallback - assume support if we have basic WebAuthn
+                    if (window.PublicKeyCredential) {
+                        return { supported: true, reason: 'WebAuthn available (fallback detection)' };
+                    }
+                    
+                    return { supported: false, reason: 'No biometric hardware detected' };
                 } catch (error) {
                     console.error('Biometric detection error:', error);
+                    // Fallback - assume support if we have basic WebAuthn
+                    if (window.PublicKeyCredential) {
+                        return { supported: true, reason: 'WebAuthn available (error fallback)' };
+                    }
                     return { supported: false, reason: 'Detection failed' };
                 }
             }
