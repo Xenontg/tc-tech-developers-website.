@@ -23,6 +23,10 @@
                     detectSessionInUrl: true
                 }
             });
+            
+            // Test Supabase connection
+            console.log('Supabase client initialized with:', { supabaseUrl, supabaseKey: supabaseKey ? '***' : 'missing' });
+            console.log('Supabase client object:', supabaseClient);
         </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
@@ -2606,24 +2610,39 @@
             const password = document.getElementById('signin-password').value;
             
             try {
+                console.log('Attempting sign in with:', { email, password: password ? '***' : 'empty' });
+                
                 const { data, error } = await supabaseClient.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
                 
-                if (error) throw error;
+                console.log('Sign in response:', { data, error });
                 
-                // Successfully signed in
-                authModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                if (error) {
+                    console.error('Supabase sign in error:', error);
+                    showError('Sign-in failed: ' + error.message);
+                    return;
+                }
                 
-                // Store user session
-                localStorage.setItem('user-session', JSON.stringify(data));
-                
-                // Update UI immediately
-                updateAuthUI();
+                if (data.user) {
+                    console.log('Sign in successful for user:', data.user.email);
+                    // Successfully signed in
+                    authModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    
+                    // Store user session
+                    localStorage.setItem('user-session', JSON.stringify(data));
+                    
+                    // Update UI immediately
+                    updateAuthUI();
+                } else {
+                    console.log('No user data in response');
+                    showError('Sign in failed: No user data received');
+                }
                 
             } catch (error) {
+                console.error('Unexpected sign in error:', error);
                 showError('Sign-in failed: ' + error.message);
             }
         });

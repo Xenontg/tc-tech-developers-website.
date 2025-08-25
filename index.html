@@ -23,6 +23,10 @@
                     detectSessionInUrl: true
                 }
             });
+            
+            // Test Supabase connection
+            console.log('Supabase client initialized with:', { supabaseUrl, supabaseKey: supabaseKey ? '***' : 'missing' });
+            console.log('Supabase client object:', supabaseClient);
         </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
@@ -2422,32 +2426,40 @@
                 }
                 
                 try {
+                    console.log('Attempting sign in with:', { email, password: password ? '***' : 'empty' });
+                    
                     const { data, error } = await supabaseClient.auth.signInWithPassword({
                         email: email,
                         password: password
                     });
                     
+                    console.log('Sign in response:', { data, error });
+                    
                     if (error) {
+                        console.error('Supabase sign in error:', error);
                         showError(error.message);
                         return;
                     }
                     
                     if (data.user) {
+                        console.log('Sign in successful for user:', data.user.email);
                         showSuccess('Sign in successful! Welcome back!');
                         localStorage.setItem('user-session', JSON.stringify(data));
+                        
+                        // Update UI to show logged-in state
+                        updateAuthUI();
                         
                         setTimeout(() => {
                             authModal.classList.remove('active');
                             document.body.style.overflow = 'auto';
                         }, 1500);
-                        
-                        authTrigger.classList.remove('projecting');
-                        authTrigger.innerHTML = 'Welcome, ' + email + ' ✓';
-                        authTrigger.style.background = 'linear-gradient(45deg, #10B981, #059669)';
+                    } else {
+                        console.log('No user data in response');
+                        showError('Sign in failed: No user data received');
                     }
                 } catch (error) {
-                    showError('An error occurred during sign in');
-                    console.error('Sign in error:', error);
+                    console.error('Unexpected sign in error:', error);
+                    showError('An error occurred during sign in: ' + error.message);
                 }
             });
             
