@@ -3217,45 +3217,70 @@
                         showSuccess('Sign up successful! Automatically signing you in...');
                         localStorage.setItem('user-session', JSON.stringify(data));
                         
-                        // Auto sign in after successful signup
-                        try {
-                            console.log('Attempting auto sign-in after signup...');
-                            
-                            // Wait a moment for the signup to fully complete
-                            await new Promise(resolve => setTimeout(resolve, 1000));
-                            
-                            const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
-                                email: email,
-                                password: password
-                            });
-                            
-                            console.log('Auto sign-in response:', { signInData, signInError });
-                            
-                            if (signInError) {
-                                console.error('Auto sign-in error:', signInError);
-                                showError('Auto sign-in failed: ' + signInError.message + '. Please sign in manually.');
+                        // Auto sign in after successful signup with retry mechanism
+                        let autoSignInAttempts = 0;
+                        const maxAttempts = 3;
+                        
+                        async function attemptAutoSignIn() {
+                            try {
+                                autoSignInAttempts++;
+                                console.log(`Auto sign-in attempt ${autoSignInAttempts}/${maxAttempts}...`);
                                 
-                                // Switch to sign-in form for manual sign-in
-                                signUpForm.style.display = 'none';
-                                signInForm.style.display = 'block';
-                                switchToSignUp.style.display = 'none';
-                                switchToSignIn.style.display = 'block';
-                            } else {
-                                console.log('Auto sign-in successful:', signInData);
-                                showSuccess('Welcome! You are now signed in.');
-                                localStorage.setItem('user-session', JSON.stringify(signInData));
-                                updateAuthUI();
+                                // Wait progressively longer between attempts
+                                const delay = autoSignInAttempts * 1000;
+                                await new Promise(resolve => setTimeout(resolve, delay));
+                                
+                                const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
+                                    email: email,
+                                    password: password
+                                });
+                                
+                                console.log(`Auto sign-in attempt ${autoSignInAttempts} response:`, { signInData, signInError });
+                                
+                                if (signInError) {
+                                    console.error(`Auto sign-in attempt ${autoSignInAttempts} failed:`, signInError);
+                                    
+                                    if (autoSignInAttempts < maxAttempts) {
+                                        console.log(`Retrying auto sign-in... (${maxAttempts - autoSignInAttempts} attempts left)`);
+                                        showSuccess(`Sign up successful! Attempting auto sign-in... (${maxAttempts - autoSignInAttempts} attempts left)`);
+                                        setTimeout(attemptAutoSignIn, 1000);
+                                        return;
+                                    } else {
+                                        console.log('All auto sign-in attempts failed, switching to manual sign-in');
+                                        showError(`Auto sign-in failed after ${maxAttempts} attempts. Please sign in manually.`);
+                                        
+                                        // Switch to sign-in form for manual sign-in
+                                        signUpForm.style.display = 'none';
+                                        signInForm.style.display = 'block';
+                                        switchToSignUp.style.display = 'none';
+                                        switchToSignIn.style.display = 'block';
+                                    }
+                                } else {
+                                    console.log('Auto sign-in successful:', signInData);
+                                    showSuccess('Welcome! You are now signed in.');
+                                    localStorage.setItem('user-session', JSON.stringify(signInData));
+                                    updateAuthUI();
+                                }
+                            } catch (signInError) {
+                                console.error(`Auto sign-in attempt ${autoSignInAttempts} exception:`, signInError);
+                                
+                                if (autoSignInAttempts < maxAttempts) {
+                                    console.log(`Retrying auto sign-in... (${maxAttempts - autoSignInAttempts} attempts left)`);
+                                    setTimeout(attemptAutoSignIn, 1000);
+                                } else {
+                                    showError('Auto sign-in failed. Please sign in manually.');
+                                    
+                                    // Switch to sign-in form for manual sign-in
+                                    signUpForm.style.display = 'none';
+                                    signInForm.style.display = 'block';
+                                    switchToSignUp.style.display = 'none';
+                                    switchToSignIn.style.display = 'block';
+                                }
                             }
-                        } catch (signInError) {
-                            console.error('Auto sign-in exception:', signInError);
-                            showError('Auto sign-in failed. Please sign in manually.');
-                            
-                            // Switch to sign-in form for manual sign-in
-                            signUpForm.style.display = 'none';
-                            signInForm.style.display = 'block';
-                            switchToSignUp.style.display = 'none';
-                            switchToSignIn.style.display = 'block';
                         }
+                        
+                        // Start auto sign-in process
+                        attemptAutoSignIn();
                         
                         setTimeout(() => {
                             authModal.classList.remove('active');
