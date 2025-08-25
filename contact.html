@@ -3023,88 +3023,74 @@
                     
                     const credentials = JSON.parse(storedCredentials);
                     
-                    // Mobile-friendly authentication approach
-                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                    
-                    if (isMobile) {
-                        // For mobile, try to trigger fingerprint directly
-                        try {
-                            // Create a simple challenge for mobile
-                            const challenge = new Uint8Array(32);
-                            crypto.getRandomValues(challenge);
+                    // Try to trigger fingerprint authentication on all devices
+                    try {
+                        // Create a proper challenge
+                        const challenge = new Uint8Array(32);
+                        crypto.getRandomValues(challenge);
+                        
+                        const options = {
+                            challenge: challenge,
+                            rpId: window.location.hostname,
+                            userVerification: 'required',
+                            timeout: 60000,
+                            authenticatorSelection: {
+                                authenticatorAttachment: 'platform',
+                                userVerification: 'required'
+                            }
+                        };
+                        
+                        console.log('Attempting biometric authentication...');
+                        
+                        // This should trigger the fingerprint sensor
+                        const publicKeyCredential = await navigator.credentials.get({
+                            publicKey: options
+                        });
+                        
+                        if (publicKeyCredential) {
+                            console.log('Biometric verification successful');
                             
-                            const options = {
-                                challenge: challenge,
-                                rpId: window.location.hostname,
-                                userVerification: 'required',
-                                timeout: 60000,
-                                authenticatorSelection: {
-                                    authenticatorAttachment: 'platform',
-                                    userVerification: 'required'
-                                }
-                            };
-                            
-                            // This should trigger the fingerprint sensor on mobile
-                            const publicKeyCredential = await navigator.credentials.get({
-                                publicKey: options
+                            // Now sign in with stored credentials
+                            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                                email: credentials.email,
+                                password: credentials.password
                             });
                             
-                            if (publicKeyCredential) {
-                                // Successfully got biometric verification
-                                console.log('Mobile biometric verification successful');
-                                
-                                // Now sign in with stored credentials
-                                const { data, error } = await supabaseClient.auth.signInWithPassword({
-                                    email: credentials.email,
-                                    password: credentials.password
-                                });
-                                
-                                if (error) {
-                                    throw new Error('Sign in failed after biometric verification');
-                                }
-                                
-                                showSuccess('Fingerprint authentication successful!');
-                                localStorage.setItem('user-session', JSON.stringify(data));
-                                updateAuthUI();
-                                
-                                setTimeout(() => {
-                                    const authModal = document.querySelector('.auth-modal');
-                                    if (authModal) {
-                                        authModal.classList.remove('active');
-                                        document.body.style.overflow = 'auto';
-                                    }
-                                }, 1500);
-                                
-                                return;
+                            if (error) {
+                                throw new Error('Sign in failed after biometric verification');
                             }
-                        } catch (mobileError) {
-                            console.log('Mobile biometric failed, trying fallback:', mobileError);
-                            // Fall through to password-based sign in
+                            
+                            showSuccess('Fingerprint authentication successful!');
+                            localStorage.setItem('user-session', JSON.stringify(data));
+                            updateAuthUI();
+                            
+                            setTimeout(() => {
+                                const authModal = document.querySelector('.auth-modal');
+                                if (authModal) {
+                                    authModal.classList.remove('active');
+                                    document.body.style.overflow = 'auto';
+                                }
+                            }, 1500);
+                            
+                            return;
+                        } else {
+                            throw new Error('No biometric credential returned');
                         }
+                        
+                    } catch (biometricError) {
+                        console.error('Biometric authentication failed:', biometricError);
+                        
+                        // Only show error, don't fallback to password
+                        showError('Fingerprint authentication failed. Please try again or use password.');
+                        fingerprintBtn.disabled = false;
+                        fingerprintBtn.innerHTML = `
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            Sign In with Fingerprint
+                        `;
+                        return;
                     }
-                    
-                    // Fallback: Direct password sign in (simulates biometric success)
-                    console.log('Using fallback authentication method');
-                    const { data, error } = await supabaseClient.auth.signInWithPassword({
-                        email: credentials.email,
-                        password: credentials.password
-                    });
-                    
-                    if (error) {
-                        throw new Error('Authentication failed: ' + error.message);
-                    }
-                    
-                    showSuccess('Authentication successful!');
-                    localStorage.setItem('user-session', JSON.stringify(data));
-                    updateAuthUI();
-                    
-                    setTimeout(() => {
-                        const authModal = document.querySelector('.auth-modal');
-                        if (authModal) {
-                            authModal.classList.remove('active');
-                            document.body.style.overflow = 'auto';
-                        }
-                    }, 1500);
                     
                 } catch (error) {
                     console.error('Biometric authentication error:', error);
