@@ -2854,11 +2854,32 @@
             // Biometric Authentication Functions
             let biometricCredentials = null;
             
-            // Check if biometric authentication is supported
-            function isBiometricSupported() {
-                return window.PublicKeyCredential && 
-                       PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable &&
-                       PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+            // Check if biometric authentication is supported with better detection
+            async function isBiometricSupported() {
+                try {
+                    // Check basic WebAuthn support
+                    if (!window.PublicKeyCredential) {
+                        return { supported: false, reason: 'WebAuthn not supported' };
+                    }
+                    
+                    // Check if platform authenticator is available
+                    if (PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
+                        const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+                        if (!available) {
+                            return { supported: false, reason: 'No biometric hardware detected' };
+                        }
+                    }
+                    
+                    // Check for secure context (HTTPS or localhost)
+                    if (!window.isSecureContext) {
+                        return { supported: false, reason: 'HTTPS required for biometric login' };
+                    }
+                    
+                    return { supported: true, reason: 'Biometric authentication available' };
+                } catch (error) {
+                    console.error('Biometric detection error:', error);
+                    return { supported: false, reason: 'Detection failed' };
+                }
             }
             
             // Initialize biometric authentication
@@ -2866,14 +2887,23 @@
                 const fingerprintBtn = document.getElementById('fingerprint-btn');
                 if (!fingerprintBtn) return;
                 
-                if (isBiometricSupported()) {
+                const biometricStatus = await isBiometricSupported();
+                
+                if (biometricStatus.supported) {
                     fingerprintBtn.disabled = false;
                     fingerprintBtn.addEventListener('click', handleBiometricSignIn);
-                    console.log('Biometric authentication supported');
+                    fingerprintBtn.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        Sign In with Fingerprint
+                    `;
+                    console.log('Biometric authentication supported:', biometricStatus.reason);
                 } else {
                     fingerprintBtn.disabled = true;
-                    fingerprintBtn.innerHTML = 'Fingerprint Not Supported';
-                    console.log('Biometric authentication not supported');
+                    fingerprintBtn.innerHTML = `Fingerprint Not Available`;
+                    fingerprintBtn.title = biometricStatus.reason;
+                    console.log('Biometric authentication not supported:', biometricStatus.reason);
                 }
             }
             
@@ -2882,7 +2912,7 @@
                 try {
                     const fingerprintBtn = document.getElementById('fingerprint-btn');
                     fingerprintBtn.disabled = true;
-                    fingerprintBtn.innerHTML = 'Authenticating...';
+                    fingerprintBtn.innerHTML = 'Scanning Fingerprint...';
                     
                     // Check if user has stored biometric credentials
                     const storedCredentials = localStorage.getItem('biometric-credentials');
