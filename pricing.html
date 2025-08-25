@@ -27,6 +27,25 @@
              // Test Supabase connection
              console.log('Supabase client initialized with:', { supabaseUrl, supabaseKey: supabaseKey ? '***' : 'missing' });
              console.log('Supabase client object:', supabaseClient);
+             
+             // Test Supabase connection by checking auth status
+             async function testSupabaseConnection() {
+                 try {
+                     const { data, error } = await supabaseClient.auth.getSession();
+                     console.log('Supabase connection test - Session check:', { data, error });
+                     
+                     if (error) {
+                         console.error('Supabase connection failed:', error);
+                     } else {
+                         console.log('Supabase connection successful');
+                     }
+                 } catch (err) {
+                     console.error('Supabase connection test failed:', err);
+                 }
+             }
+             
+             // Run connection test
+             testSupabaseConnection();
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
@@ -3200,19 +3219,42 @@
                         
                         // Auto sign in after successful signup
                         try {
+                            console.log('Attempting auto sign-in after signup...');
+                            
+                            // Wait a moment for the signup to fully complete
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                            
                             const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
                                 email: email,
                                 password: password
                             });
                             
+                            console.log('Auto sign-in response:', { signInData, signInError });
+                            
                             if (signInError) {
-                                showError('Auto sign-in failed: ' + signInError.message);
+                                console.error('Auto sign-in error:', signInError);
+                                showError('Auto sign-in failed: ' + signInError.message + '. Please sign in manually.');
+                                
+                                // Switch to sign-in form for manual sign-in
+                                signUpForm.style.display = 'none';
+                                signInForm.style.display = 'block';
+                                switchToSignUp.style.display = 'none';
+                                switchToSignIn.style.display = 'block';
                             } else {
+                                console.log('Auto sign-in successful:', signInData);
                                 showSuccess('Welcome! You are now signed in.');
+                                localStorage.setItem('user-session', JSON.stringify(signInData));
                                 updateAuthUI();
                             }
                         } catch (signInError) {
+                            console.error('Auto sign-in exception:', signInError);
                             showError('Auto sign-in failed. Please sign in manually.');
+                            
+                            // Switch to sign-in form for manual sign-in
+                            signUpForm.style.display = 'none';
+                            signInForm.style.display = 'block';
+                            switchToSignUp.style.display = 'none';
+                            switchToSignIn.style.display = 'block';
                         }
                         
                         setTimeout(() => {
